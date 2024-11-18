@@ -1,5 +1,39 @@
 from abc import ABC, abstractmethod
 
+class DessertShop:
+    def __init__(self):
+        pass
+
+    def user_prompt_candy(self):
+
+        name = input("What is the name of the candy?: ").strip()
+        
+        valid = False
+        while not valid:
+            try:
+                candy_weight = float(input("What is the weight of the candy?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid weight. Must be a float.")
+
+        valid = False
+        while not valid:
+            try:
+                candy_weight = float(input("What is the price per pound of the candy?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid weight. Must be a float.")
+
+    def user_prompt_cookie(self):
+        pass
+
+    def user_prompt_icecream(self):
+        pass
+
+    def user_prompt_sundae(self):
+        pass
+
+
 class DessertItem(ABC):
     def __init__(self, name, tax_percent=7.25):
         self.name = name

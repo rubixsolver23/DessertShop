@@ -22,8 +22,8 @@ def make_receipt(data, out_file_name):
             ( "BACKGROUND" , ( 0, 0 ), ( 2, 0 ), colors.gray ), 
             ( "TEXTCOLOR" , ( 0, 0 ), ( -1, 0 ), colors.whitesmoke ), 
             ( "ALIGN" , ( 0, 0 ), ( -1, -1 ), "CENTER" ), 
-            ( "BACKGROUND" , ( 0 , 1 ) , ( 2 , 9 ), colors.beige ), 
-            ( "BACKGROUND" , ( 0, 7 ) , ( 2, 9 ), colors.aliceblue ),
+            ( "BACKGROUND" , ( 0 , 1 ) , ( 2 , 100 ), colors.beige ), 
+            ( "BACKGROUND" , ( 0, len(data)-2 ) , ( 2, len(data) ), colors.aliceblue ),
         ] 
     ) 
     
