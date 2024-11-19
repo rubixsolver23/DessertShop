@@ -28,7 +28,7 @@ def main():
                         "2: Cookie", 
                         "3: Ice Cream", 
                         "4: Sundae", 
-                        "\nWhat would you like t oadd to the order? (1-4, Enter for done): "])
+                        "\nWhat would you like to add to the order? (1-4, Enter for done): "])
 
 
     while not done:
@@ -67,5 +67,7 @@ def main():
     order_list.append(["Order Total", "", "$"+str(round(order.order_cost() + order.order_tax(), 2))])
     order_list.append(["Total items in the order", "", str(len(order))])
     make_receipt(order_list, "receipt")
+
+    print("\nThank you for your order! Have a nice day!")
 
 main()

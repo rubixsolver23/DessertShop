@@ -19,19 +19,87 @@ class DessertShop:
         valid = False
         while not valid:
             try:
-                candy_weight = float(input("What is the price per pound of the candy?: ").strip())
+                price_per_pound = float(input("What is the price per pound of the candy?: ").strip())
                 valid = True
             except ValueError:
-                print("That's not a valid weight. Must be a float.")
+                print("That's not a valid price. Must be a float.")
 
+        return Candy(name, candy_weight, price_per_pound)
+    
     def user_prompt_cookie(self):
-        pass
+
+        name = input("What is the name of the cookie?: ").strip()
+        
+        valid = False
+        while not valid:
+            try:
+                cookie_count = int(input("How many cookies?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid weight. Must be an integer.")
+
+        valid = False
+        while not valid:
+            try:
+                price_per_dozen = float(input("What is the price per dozen of the cookie?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid price. Must be a float.")
+
+        return Cookie(name, cookie_count, price_per_dozen)
 
     def user_prompt_icecream(self):
-        pass
+
+        name = input("What is the name of the ice cream?: ").strip()
+        
+        valid = False
+        while not valid:
+            try:
+                scoop_count = int(input("How many scoops?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid weight. Must be an integer.")
+
+        valid = False
+        while not valid:
+            try:
+                price_per_scoop = float(input("What is the price per scoop of the ice cream?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid price. Must be a float.")
+
+        return IceCream(name, scoop_count, price_per_scoop)
 
     def user_prompt_sundae(self):
-        pass
+        name = input("What is the name of the sundae?: ").strip()
+        
+        valid = False
+        while not valid:
+            try:
+                scoop_count = int(input("How many scoops?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid weight. Must be an integer.")
+
+        valid = False
+        while not valid:
+            try:
+                price_per_scoop = float(input("What is the price per scoop?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid price. Must be a float.")
+
+        topping_name = input("What is the name of the topping?: ").strip()
+
+        valid = False
+        while not valid:
+            try:
+                topping_price = float(input("What is the price of the topping?: ").strip())
+                valid = True
+            except ValueError:
+                print("That's not a valid price. Must be a float.")
+        
+        return Sundae(name, scoop_count, price_per_scoop, topping_name, topping_price)
 
 
 class DessertItem(ABC):
