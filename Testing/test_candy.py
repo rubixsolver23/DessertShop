@@ -1,4 +1,4 @@
-from dessertshop.dessertshop import Candy
+from dessertshop.dessert import Candy
 
 def test_candy():
     candy1 = Candy("Tootsie roll", 6, 2)

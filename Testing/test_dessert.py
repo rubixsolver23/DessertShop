@@ -1,4 +1,4 @@
-from dessertshop.dessertshop import (
+from dessertshop.dessert import (
     Candy,
     Cookie,
     IceCream,

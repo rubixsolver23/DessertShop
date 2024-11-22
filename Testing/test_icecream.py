@@ -1,4 +1,4 @@
-from dessertshop.dessertshop import IceCream
+from dessertshop.dessert import IceCream
 
 def test_icecream():
     icecream1 = IceCream("Mint", 5, 1)

@@ -1,4 +1,4 @@
-from dessertshop.dessertshop import Cookie
+from dessertshop.dessert import Cookie
 
 def test_cookie():
     cookie1 = Cookie("Chocolate", 7, 3)

@@ -1,4 +1,4 @@
-from dessertshop.dessertshop import Sundae
+from dessertshop.dessert import Sundae
 
 def test_sundae():
     sundae1 = Sundae("OreoSundae", 8, 1.5, "Oreo", 0.5)
