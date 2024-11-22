@@ -58,7 +58,7 @@ class DessertShop:
                 scoop_count = int(input("How many scoops?: ").strip())
                 valid = True
             except ValueError:
-                print("That's not a valid weight. Must be an integer.")
+                print("That's not a valid amount. Must be an integer.")
 
         valid = False
         while not valid:
@@ -79,7 +79,7 @@ class DessertShop:
                 scoop_count = int(input("How many scoops?: ").strip())
                 valid = True
             except ValueError:
-                print("That's not a valid weight. Must be an integer.")
+                print("That's not a valid amount. Must be an integer.")
 
         valid = False
         while not valid:
