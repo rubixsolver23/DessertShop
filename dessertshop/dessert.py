@@ -124,7 +124,7 @@ class Candy(DessertItem):
         return self.candy_weight * self.price_per_pound
     
     def __str__(self):
-        return f"{self.name}, {self.candy_weight}lbs, ${self.price_per_pound}/lb, ${self.calculate_cost()}, ${self.calculate_tax()}"
+        return f"{self.name}, {self.candy_weight}lbs, ${self.price_per_pound}/lb, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
 
 class Cookie(DessertItem):
     def __init__(self, name, cookie_quantity, price_per_dozen):
@@ -136,7 +136,7 @@ class Cookie(DessertItem):
         return self.cookie_quantity/12 * self.price_per_dozen
     
     def __str__(self):
-        return f"{self.name}, {self.cookie_quantity} cookies, ${self.price_per_dozen}/dozen, ${self.calculate_cost()}, ${self.calculate_tax()}"
+        return f"{self.name}, {self.cookie_quantity} cookies, ${self.price_per_dozen}/dozen, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
         
 class IceCream(DessertItem):
     def __init__(self, name, scoop_count, price_per_scoop):
@@ -148,7 +148,7 @@ class IceCream(DessertItem):
         return self.price_per_scoop * self.scoop_count
     
     def __str__(self):
-        return f"{self.name}, {self.__subclasshook__} scoops, ${self.price_per_scoop}/scoop, ${self.calculate_cost()}, ${self.calculate_tax()}"
+        return f"{self.name}, {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
         
 class Sundae(IceCream):
     def __init__(self, name, scoop_count, price_per_scoop, topping_name, topping_price):
@@ -160,7 +160,7 @@ class Sundae(IceCream):
         return super().calculate_cost() + self.topping_price
     
     def __str__(self):
-        return f"{self.name}, {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${self.topping_price} of {self.topping_name}, ${self.calculate_cost()}, ${self.calculate_tax()}"
+        return f"{self.name}, {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${self.topping_price} of {self.topping_name}, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
 
 
 class Order:
@@ -185,3 +185,9 @@ class Order:
         for item in self.order:
             total_tax += item.calculate_tax()
         return round(total_tax, 2)
+
+    def __str__(self):
+        string_repr = ""
+        for item in self.order:
+            string_repr += str(item) + ", "
+        return string_repr[:-2]
