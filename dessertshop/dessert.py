@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from packaging import Packaging
 
 class DessertShop:
     def __init__(self):
@@ -102,8 +103,9 @@ class DessertShop:
         return Sundae(name, scoop_count, price_per_scoop, topping_name, topping_price)
 
 
-class DessertItem(ABC):
-    def __init__(self, name, tax_percent=7.25):
+class DessertItem(ABC, Packaging):
+    def __init__(self, name, tax_percent=7.25, packaging=None):
+        super().__init__(packaging)
         self.name = name
         self.tax_percent = tax_percent
 
@@ -119,48 +121,52 @@ class Candy(DessertItem):
         super().__init__(name)
         self.candy_weight = candy_weight
         self.price_per_pound = price_per_pound
+        self.packaging = "Bag"
 
     def calculate_cost(self):
         return self.candy_weight * self.price_per_pound
     
     def __str__(self):
-        return f"{self.name}, {self.candy_weight}lbs, ${self.price_per_pound}/lb, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
+        return f"{self.name} ({self.packaging}), {self.candy_weight}lbs, ${self.price_per_pound}/lb, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
 
 class Cookie(DessertItem):
     def __init__(self, name, cookie_quantity, price_per_dozen):
         super().__init__(name)
         self.cookie_quantity = cookie_quantity
         self.price_per_dozen = price_per_dozen
+        self.packaging = "Box"
     
     def calculate_cost(self):
         return self.cookie_quantity/12 * self.price_per_dozen
     
     def __str__(self):
-        return f"{self.name}, {self.cookie_quantity} cookies, ${self.price_per_dozen}/dozen, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
+        return f"{self.name} ({self.packaging}), {self.cookie_quantity} cookies, ${self.price_per_dozen}/dozen, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
         
 class IceCream(DessertItem):
     def __init__(self, name, scoop_count, price_per_scoop):
         super().__init__(name)
         self.scoop_count = scoop_count
         self.price_per_scoop = price_per_scoop
+        self.packaging = "Bowl"
     
     def calculate_cost(self):
         return self.price_per_scoop * self.scoop_count
     
     def __str__(self):
-        return f"{self.name}, {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
+        return f"{self.name} ({self.packaging}), {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
         
 class Sundae(IceCream):
     def __init__(self, name, scoop_count, price_per_scoop, topping_name, topping_price):
         super().__init__(name, scoop_count, price_per_scoop)
         self.topping_name = topping_name
         self.topping_price = topping_price
+        self.packaging = "Boat"
     
     def calculate_cost(self):
         return super().calculate_cost() + self.topping_price
     
     def __str__(self):
-        return f"{self.name}, {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${self.topping_price} of {self.topping_name}, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
+        return f"{self.name} ({self.packaging}), {self.scoop_count} scoops, ${self.price_per_scoop}/scoop, ${self.topping_price} of {self.topping_name}, ${round(self.calculate_cost(), 2)}, ${round(self.calculate_tax(), 2)}"
 
 
 class Order:
@@ -187,7 +193,34 @@ class Order:
         return round(total_tax, 2)
 
     def __str__(self):
-        string_repr = ""
+        string_repr = "----------------------------------------------Receipt---------------------------"
         for item in self.order:
-            string_repr += str(item) + ", "
+            if isinstance(item, Candy):
+                string_repr += f"\n{item.name} ({item.packaging})"
+                string_repr += f"\n      {item.candy_weight} lbs. @ ${item.price_per_pound}/lb.:"
+                string_repr += " "*(54-len(f"      {item.candy_weight} lbs. @ ${item.price_per_pound}/lb.:"))
+                string_repr += f"${round(item.calculate_cost(), 2)}           [Tax: ${round(item.calculate_tax(), 2)}]"
+
+            elif isinstance(item, Cookie):
+                string_repr += f"\n{item.name} ({item.packaging})"
+                string_repr += f"\n      {item.cookie_quantity} cookies @ ${item.price_per_dozen}/dozen:"
+                string_repr += " "*(54-len(f"      {item.cookie_quantity} cookies @ ${item.price_per_dozen}/dozen:"))
+                string_repr += f"${round(item.calculate_cost(), 2)}           [Tax: ${round(item.calculate_tax(), 2)}]"
+
+            elif isinstance(item, Sundae):
+                string_repr += f"\n{item.name} ({item.packaging})"
+                string_repr += f"\n      {item.scoop_count} scoops @ ${item.price_per_scoop}/scoop"
+                string_repr += f"\n      {item.topping_name} topping @ ${item.topping_price}:"
+
+                string_repr += " "*(54-len(f"      {item.topping_name} topping @ ${item.topping_price}:"))
+                string_repr += f"${round(item.calculate_cost(), 2)}           [Tax: ${round(item.calculate_tax(), 2)}]"
+            
+            elif isinstance(item, IceCream):
+                string_repr += f"\n{item.name} ({item.packaging})"
+                string_repr += f"\n      {item.scoop_count} scoops @ ${item.price_per_scoop}/scoop:"
+                string_repr += " "*(54-len(f"      {item.scoop_count} scoops @ ${item.price_per_scoop}/scoop:"))
+                string_repr += f"${round(item.calculate_cost(), 2)}           [Tax: ${round(item.calculate_tax(), 2)}]"
+            
+        string_repr += "---------------------------------------------------------------------------------"
+        string_repr += f"Total number of items in the order: {len(self)}"
         return string_repr[:-2]
