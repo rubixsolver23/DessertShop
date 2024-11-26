@@ -221,6 +221,8 @@ class Order:
                 string_repr += " "*(54-len(f"      {item.scoop_count} scoops @ ${item.price_per_scoop}/scoop:"))
                 string_repr += f"${round(item.calculate_cost(), 2)}           [Tax: ${round(item.calculate_tax(), 2)}]"
             
-        string_repr += "---------------------------------------------------------------------------------"
-        string_repr += f"Total number of items in the order: {len(self)}"
-        return string_repr[:-2]
+        string_repr += "\n---------------------------------------------------------------------------------"
+        string_repr += f"\nTotal number of items in the order: {len(self)}"
+        string_repr += f"\nOrder Subtotals:                                      ${round(self.order_cost(),2)}           [Tax: ${round(self.order_tax(),2)}]"
+        string_repr += f"\nOrder Total:                                                                ${round(self.order_cost()+self.order_tax(), 2)}"
+        return string_repr
